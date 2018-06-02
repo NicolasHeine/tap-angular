@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Importer le composant à utiliser dans le route
 import { HomeComponent } from './components/home/home.component';
+import { MeComponent } from './components/me/me.component';
+import { TapComponent } from './components/tap/tap.component';
 
 // Création du tableau de routes
 const appRoutes: Routes = [
@@ -12,6 +14,14 @@ const appRoutes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'me',
+    component: MeComponent
+  },
+  {
+    path: 'tap',
+    component: TapComponent
   }
 ];
 
