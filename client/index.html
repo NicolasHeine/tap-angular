@@ -5,7 +5,21 @@
     <title>Title</title>
 </head>
 <body>
-    <p>Hello world !</p>
+    <main>
+        <section>
+            <h2>
+                Ajouter une tâche
+                <span class="errorAddTask">Champ obligatoire</span>
+            </h2>
+            <form action="/api/task" method="post">
+                <label for="title">Titre</label>
+                <input type="text" id="title" name="title">
+                <button type="submit">Envoyer</button>
+            </form>
+        </section>
+        <section></section>
+    </main>
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="js/app.js"></script>
 </body>
