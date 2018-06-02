@@ -1,6 +1,6 @@
 # Application Tap Angular
 
-## How to use
+## How to start
 
 Download dependencies :
 
@@ -14,7 +14,7 @@ Launch server with nodemon :
 npm run start
 ```
 
-Add a data directory :
+Add a directory named "data" for MongoDB :
 
 ```
 mkdir data
