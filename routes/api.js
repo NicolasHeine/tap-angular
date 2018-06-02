@@ -13,5 +13,33 @@ router.get('/', (req, res, next) => {
   res.json({ res: 'Bienvenue dans votre API' })
 });
 
+router.get('/tasks', (req, res, next) => {
+
+  // Ouvrir une connexion sur la base MongoDb
+  MongoClient.connect(mongodbUrl, (err, db) =>{
+
+    // Tester la connexion
+    if(err){ res.send(err) }
+    else {
+
+      // Récupération des documents de la collection 'list' => find
+      db.collection('list').find().toArray((err, tasks) => {
+
+        // Tester la commande MongoDb
+        if(err){ res.send(err) }
+
+        else{
+          // Envoyer les données au format json
+          res.json(tasks)
+        }
+      })
+    }
+
+    // Fermer la connexion à la base MongoDb
+    db.close();
+  })
+
+});
+
 // Export du module
 module.exports = router;
