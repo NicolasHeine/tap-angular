@@ -16,9 +16,14 @@ export class MeComponent implements OnInit {
 
   // Data
   score: number = 0;
-  id_user: string = '';
   token: string = '';
-  user: object;
+  user = {
+    _id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
+  };
 
   ngOnInit() {
     if(!localStorage.getItem('token')){
@@ -26,7 +31,7 @@ export class MeComponent implements OnInit {
     }else{
       this.token = localStorage.getItem('token');
       this.mongodbService.getDataFromToken(this.token).then(data => {
-        if(!data['error']){
+        if(data['error']){
         }else{
           this.user = data['user'];
         }
@@ -34,10 +39,41 @@ export class MeComponent implements OnInit {
     }
   }
 
+  start: boolean = false;
+  finish: boolean = false;
+  timer;
+  count: number = 0;
+  startGame(){
+    if(!this.finish){
+      if(this.start){ // Already launch
+        this.score++;
+      }else{ // Launch timer
+        let that = this;
+        this.start = true;
+        this.score++;
+        this.timer = setInterval(function(){
+          that.count++;
+          if(that.count === 10){
+            that.finish = true;
+            clearInterval(that.timer);
+            that.sendScore();
+          }
+        },1000)
+      }
+    }
+  }
+
   sendScore(){
-    this.mongodbService.saveTap(sessionStorage.getItem('token'), {id_user: this.id_user, score: this.score}).then(data => {
-      console.log(data);
+    this.mongodbService.saveTap(sessionStorage.getItem('token'), {id_user: this.user._id, score: this.score}).then(data => {
+      if(!data['error']){
+        this.router.navigate(['/tap']);
+      }
     });
+  }
+
+  logOut(){
+    localStorage.clear();
+    this.router.navigate(['/']);
   }
 
 }

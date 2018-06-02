@@ -289,7 +289,7 @@ var HomeComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  me works!\n</p>\n"
+module.exports = "<header>\n  Bonjour {{ user.firstName }} {{ user.lastName }}\n  You have 10 seconds to tap, ready? steady? tap!\n  <a routerLink=\"/tap\">Scores</a>\n  <a (click)=\"logOut()\">Logout</a>\n</header>\n<main>\n  <div (click)=\"startGame()\">CLIQUE ICI CONNARD</div>\n</main>\n"
 
 /***/ }),
 
@@ -324,8 +324,17 @@ var MeComponent = /** @class */ (function () {
         this.router = router;
         // Data
         this.score = 0;
-        this.id_user = '';
         this.token = '';
+        this.user = {
+            _id: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: ''
+        };
+        this.start = false;
+        this.finish = false;
+        this.count = 0;
     }
     MeComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -335,7 +344,7 @@ var MeComponent = /** @class */ (function () {
         else {
             this.token = localStorage.getItem('token');
             this.mongodbService.getDataFromToken(this.token).then(function (data) {
-                if (!data['error']) {
+                if (data['error']) {
                 }
                 else {
                     _this.user = data['user'];
@@ -343,10 +352,37 @@ var MeComponent = /** @class */ (function () {
             });
         }
     };
+    MeComponent.prototype.startGame = function () {
+        if (!this.finish) {
+            if (this.start) {
+                this.score++;
+            }
+            else {
+                var that_1 = this;
+                this.start = true;
+                this.score++;
+                this.timer = setInterval(function () {
+                    that_1.count++;
+                    if (that_1.count === 10) {
+                        that_1.finish = true;
+                        clearInterval(that_1.timer);
+                        that_1.sendScore();
+                    }
+                }, 1000);
+            }
+        }
+    };
     MeComponent.prototype.sendScore = function () {
-        this.mongodbService.saveTap(sessionStorage.getItem('token'), { id_user: this.id_user, score: this.score }).then(function (data) {
-            console.log(data);
+        var _this = this;
+        this.mongodbService.saveTap(sessionStorage.getItem('token'), { id_user: this.user._id, score: this.score }).then(function (data) {
+            if (!data['error']) {
+                _this.router.navigate(['/tap']);
+            }
         });
+    };
+    MeComponent.prototype.logOut = function () {
+        localStorage.clear();
+        this.router.navigate(['/']);
     };
     MeComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

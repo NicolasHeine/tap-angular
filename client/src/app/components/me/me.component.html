@@ -1,3 +1,9 @@
-<p>
-  me works!
-</p>
+<header>
+  Bonjour {{ user.firstName }} {{ user.lastName }}
+  You have 10 seconds to tap, ready? steady? tap!
+  <a routerLink="/tap">Scores</a>
+  <a (click)="logOut()">Logout</a>
+</header>
+<main>
+  <div (click)="startGame()">CLIQUE ICI CONNARD</div>
+</main>
