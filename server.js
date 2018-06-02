@@ -18,6 +18,15 @@ let app = express();
 app.set('views', path.join(__dirname, 'www'));
 app.use(express.static(path.join(__dirname, 'www')));
 
+// Set routing for angular route, server side
+app.get('/me', (req, res) => {
+  res.sendFile(path.join(__dirname, 'www/index.html'));
+});
+
+app.get('/tap', (req, res) => {
+  res.sendFile(path.join(__dirname, 'www/index.html'));
+});
+
 // Configurer body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));

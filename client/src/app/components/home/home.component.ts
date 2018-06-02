@@ -10,21 +10,20 @@ export class HomeComponent implements OnInit {
 
   constructor(private mongodbService: MongodbService) { }
 
-  private tasksCollection: any[];
-
-  private showTasks(){
-
-    // Appel de la fonction du service getAllTasks()
-    this.mongodbService.getAllTasks().then(data => {
-
-      // callBack => Injecter les données dans un tableau
-      this.tasksCollection = data;
-
-    });
-  }
+  user = {
+    firstName: '',
+    lastName: '',
+    email: 'yolsdo@ea.Fr',
+    password: 'test'
+  };
 
   ngOnInit() {
-    this.showTasks()
+    this.mongodbService.registerUser(this.user).then(user => {
+
+      // callBack => Injecter les données dans un tableau
+      //this.tasksCollection = data;
+      console.log(user);
+    });
   }
 
 }

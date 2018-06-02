@@ -4,6 +4,9 @@ let ObjectId = mongodb.ObjectID;
 let MongoClient = mongodb.MongoClient;
 let mongodbUrl = 'mongodb://localhost:27017/tasks';
 
+// Encoded password
+let bcrypt = require('bcrypt');
+
 // Configuration du module
 let express = require('express');
 let router = express.Router();
@@ -13,67 +16,72 @@ router.get('/', (req, res, next) => {
   res.json({ res: 'Bienvenue dans votre API' })
 });
 
-router.get('/tasks', (req, res, next) => {
-
+// Register user
+router.post('/register', (req, res, next) => {
   // Ouvrir une connexion sur la base MongoDb
   MongoClient.connect(mongodbUrl, (err, db) =>{
-
     // Tester la connexion
-    if(err){ res.send(err) }
-    else {
-
-      // Récupération des documents de la collection 'list' => find
-      db.collection('list').find().toArray((err, tasks) => {
-
+    if(err){
+      res.send(err)
+    }else{
+      // Check if user already exist
+      db.collection('user').find({email:req.body.email}).toArray((err, user) => {
         // Tester la commande MongoDb
-        if(err){ res.send(err) }
-
-        else{
-          // Envoyer les données au format json
-          res.json(tasks)
+        if(err){
+          res.send(err);
+          db.close();
+        }else{
+          // Check if user already existe
+          if(user.length){
+            res.json({error: 'User already exist'});
+            db.close();
+          }else{
+            bcrypt.hash(req.body.password, 10, function(err, hash) {
+              db.collection('user').insertOne({firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, password: hash}, function(err, userInsered){
+                res.json(userInsered.ops[0]);
+                db.close();
+              })
+            });
+          }
         }
       })
     }
-
-    // Fermer la connexion à la base MongoDb
-    db.close();
   })
-
 });
 
-router.post('/task', (req, res, next) => {
-
-  // Récupération des données depuis la requête
-  let task = req.body;
-
-  // Vérifier la présence de valeur dans la requête
-  if(!task.title){ res.status(400); res.json({ "error": "Bad Data" });
-  } else {
-
-    // Définition de la propriété isDone
-    task.isDone = false;
-
-    // Ouvrir une connexion sur la base MongoDb
-    MongoClient.connect(mongodbUrl, (err, db) =>{
-
-      // Tester la connexion
-      if(err){ res.send(err); db.close(); }
-      else{
-
-        // Ajouter un document dans la collection 'list' => insert
-        db.collection('list').insert([task], (err, data) => {
-
-          // Vérification de a commande MongoDb
-          if(err){  res.send(err) }
-          else{
-            res.send(task)
-            // Fermer la connexion à la base MongoDb
-            db.close()
+// Login user
+router.post('/login', (req, res, next) => {
+  // Ouvrir une connexion sur la base MongoDb
+  MongoClient.connect(mongodbUrl, (err, db) =>{
+    // Tester la connexion
+    if(err){
+      res.send(err)
+    }else{
+      // Check if user exist
+      db.collection('user').find({email:req.body.email}).toArray((err, user) => {
+        // Tester la commande MongoDb
+        if(err){
+          res.send(err);
+        }else{
+          // Check if user exist
+          if(!user.length){
+            res.json({error: 'User not exist'});
+          }else{
+            bcrypt.compare(req.body.password, user.password, function(err, res) {
+              if(res) {
+                // Passwords match
+                res.json({success: true, token: ''});
+              } else {
+                res.json({error: 'Wrong login'});
+              }
+            });
           }
-        })
-      }
-    })
-  }
+        }
+      })
+    }
+  });
+
+  db.close();
 });
 
 // Export du module

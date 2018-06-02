@@ -8,12 +8,6 @@ Download dependencies :
 npm install
 ```
 
-Launch server with nodemon :
-
-```
-npm run start
-```
-
 Add a directory named "data" for MongoDB :
 
 ```
@@ -24,4 +18,10 @@ Start MongoDB :
 
 ```
 npm run mongo
+```
+
+Launch server with nodemon :
+
+```
+npm run start
 ```
