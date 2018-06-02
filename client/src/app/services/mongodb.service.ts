@@ -11,6 +11,7 @@ export class MongodbService {
   private loginUserUrl = 'http://localhost:8080/api/login';
   private getDataUrl = 'http://localhost:8080/api/getdata';
   private saveTapUrl = 'http://localhost:8080/api/save';
+  private getScoresUrl = 'http://localhost:8080/api/getscores';
 
   public registerUser (user: {firstName: string, lastName: string, email: string, password: string}): Promise<any[]> {
     return fetch(this.registerUserUrl,
@@ -79,6 +80,25 @@ export class MongodbService {
           'x-access-token': token
         },
         body: JSON.stringify(content)
+      })
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      // Traiter le réponse
+      .then( data => data.json() )
+      // Capter l'erreur
+      .catch((err) => console.log(err) );
+  }
+
+  public getScores(token: string): Promise<any[]> {
+    return fetch(this.getScoresUrl,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        }
       })
       .then(data => {
         return Promise.resolve(data);

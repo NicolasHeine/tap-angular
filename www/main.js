@@ -289,7 +289,7 @@ var HomeComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n  Bonjour {{ user.firstName }} {{ user.lastName }}\n  You have 10 seconds to tap, ready? steady? tap!\n  <a routerLink=\"/tap\">Scores</a>\n  <a (click)=\"logOut()\">Logout</a>\n</header>\n<main>\n  <div (click)=\"startGame()\">CLIQUE ICI CONNARD</div>\n</main>\n"
+module.exports = "<header>\n  Bonjour {{ user.firstName }} {{ user.lastName }}\n  You have 10 seconds to tap, ready? steady? tap!\n  <a routerLink=\"/tap\">Scores</a>\n  <a (click)=\"logOut()\">Logout</a>\n</header>\n<main>\n  <button (click)=\"startGame()\">CLIQUE ICI</button>\n  <div class=\"state state-{{ count }}\">Timer</div>\n</main>\n"
 
 /***/ }),
 
@@ -407,7 +407,7 @@ var MeComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  tap works!\n</p>\n"
+module.exports = "<header>\n  Score table\n  Here is the list of the scores\n  <a routerLink=\"/me\">Play</a>\n  <a (click)=\"logOut()\">Logout</a>\n</header>\n<main>\n  <ul class=\"scores\">\n    <li *ngFor=\"let score of scores\">\n      <span class=\"score\">{{ score.score }}pts</span> <span class=\"info\">{{ score.firstName}} {{ score.lastName }} / {{ score.time|date:'dd/MM/y - HH\\'h\\'mm\\'m\\'ss\\'s\\'' }}</span>\n    </li>\n  </ul>\n</main>\n"
 
 /***/ }),
 
@@ -422,6 +422,8 @@ module.exports = "<p>\n  tap works!\n</p>\n"
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TapComponent", function() { return TapComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_mongodb_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/mongodb.service */ "./src/app/services/mongodb.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -432,10 +434,32 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var TapComponent = /** @class */ (function () {
-    function TapComponent() {
+    function TapComponent(mongodbService, router) {
+        this.mongodbService = mongodbService;
+        this.router = router;
     }
     TapComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        if (!localStorage.getItem('token')) {
+            this.router.navigate(['/']);
+        }
+        else {
+            this.token = localStorage.getItem('token');
+            this.mongodbService.getScores(this.token).then(function (data) {
+                if (data['error']) {
+                }
+                else {
+                    _this.scores = data['scores'].reverse();
+                }
+            });
+        }
+    };
+    TapComponent.prototype.logOut = function () {
+        localStorage.clear();
+        this.router.navigate(['/']);
     };
     TapComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -443,7 +467,8 @@ var TapComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./tap.component.html */ "./src/app/components/tap/tap.component.html"),
             styles: []
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_mongodb_service__WEBPACK_IMPORTED_MODULE_1__["MongodbService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], TapComponent);
     return TapComponent;
 }());
@@ -531,6 +556,7 @@ var MongodbService = /** @class */ (function () {
         this.loginUserUrl = 'http://localhost:8080/api/login';
         this.getDataUrl = 'http://localhost:8080/api/getdata';
         this.saveTapUrl = 'http://localhost:8080/api/save';
+        this.getScoresUrl = 'http://localhost:8080/api/getscores';
     }
     MongodbService.prototype.registerUser = function (user) {
         return fetch(this.registerUserUrl, {
@@ -586,6 +612,21 @@ var MongodbService = /** @class */ (function () {
                 'x-access-token': token
             },
             body: JSON.stringify(content)
+        })
+            .then(function (data) {
+            return Promise.resolve(data);
+        })
+            .then(function (data) { return data.json(); })
+            .catch(function (err) { return console.log(err); });
+    };
+    MongodbService.prototype.getScores = function (token) {
+        return fetch(this.getScoresUrl, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            }
         })
             .then(function (data) {
             return Promise.resolve(data);

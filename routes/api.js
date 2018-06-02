@@ -81,7 +81,7 @@ router.post('/login', (req, res, next) => {
   });
 });
 
-//
+// Get data from token
 router.get('/getdata', VerifyToken, (req, res, next) => {
   if(!req.userId){
     res.json({error: 'Wrong token'})
@@ -141,6 +141,37 @@ router.post('/save', VerifyToken, (req, res, next) => {
       })
     }
   });
+});
+
+// Get all scores
+router.get('/getscores', VerifyToken, (req, res, next) => {
+  if(!req.userId){
+    res.json({error: 'Wrong token'})
+  }else{
+    // Ouvrir une connexion sur la base MongoDb
+    MongoClient.connect(mongodbUrl, (err, db) =>{
+      // Tester la connexion
+      if(err){
+        res.send(err)
+      }else{
+        // Check if user exist
+        db.collection('tap_score').find().toArray((err, scores) => {
+          // Tester la commande MongoDb
+          if(err){
+            res.send(err);
+          }else{
+            // Check if user exist
+            if(!scores.length){
+              res.json({error: 'No score saved'});
+            }else{
+              res.json({error: false, scores: scores});
+            }
+          }
+        })
+        db.close();
+      }
+    });
+  }
 });
 
 function VerifyToken(req, res, next) {

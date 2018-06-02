@@ -1,3 +1,13 @@
-<p>
-  tap works!
-</p>
+<header>
+  Score table
+  Here is the list of the scores
+  <a routerLink="/me">Play</a>
+  <a (click)="logOut()">Logout</a>
+</header>
+<main>
+  <ul class="scores">
+    <li *ngFor="let score of scores">
+      <span class="score">{{ score.score }}pts</span> <span class="info">{{ score.firstName}} {{ score.lastName }} / {{ score.time|date:'dd/MM/y - HH\'h\'mm\'m\'ss\'s\'' }}</span>
+    </li>
+  </ul>
+</main>
