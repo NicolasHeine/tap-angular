@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 // Importer le module
 import { Routing } from './app.routing';
@@ -22,6 +23,7 @@ import { TapComponent } from './components/tap/tap.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     Routing
   ],
   providers: [],

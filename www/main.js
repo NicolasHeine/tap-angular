@@ -93,19 +93,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _components_home_home_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/home/home.component */ "./src/app/components/home/home.component.ts");
-/* harmony import */ var _partials_header_header_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./partials/header/header.component */ "./src/app/partials/header/header.component.ts");
-/* harmony import */ var _partials_footer_footer_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./partials/footer/footer.component */ "./src/app/partials/footer/footer.component.ts");
-/* harmony import */ var _components_me_me_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/me/me.component */ "./src/app/components/me/me.component.ts");
-/* harmony import */ var _components_tap_tap_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/tap/tap.component */ "./src/app/components/tap/tap.component.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _components_home_home_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/home/home.component */ "./src/app/components/home/home.component.ts");
+/* harmony import */ var _partials_header_header_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./partials/header/header.component */ "./src/app/partials/header/header.component.ts");
+/* harmony import */ var _partials_footer_footer_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./partials/footer/footer.component */ "./src/app/partials/footer/footer.component.ts");
+/* harmony import */ var _components_me_me_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/me/me.component */ "./src/app/components/me/me.component.ts");
+/* harmony import */ var _components_tap_tap_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/tap/tap.component */ "./src/app/components/tap/tap.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 // Importer le module
@@ -122,19 +124,20 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"],
-                _components_home_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"],
-                _partials_header_header_component__WEBPACK_IMPORTED_MODULE_5__["HeaderComponent"],
-                _partials_footer_footer_component__WEBPACK_IMPORTED_MODULE_6__["FooterComponent"],
-                _components_me_me_component__WEBPACK_IMPORTED_MODULE_7__["MeComponent"],
-                _components_tap_tap_component__WEBPACK_IMPORTED_MODULE_8__["TapComponent"]
+                _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
+                _components_home_home_component__WEBPACK_IMPORTED_MODULE_5__["HomeComponent"],
+                _partials_header_header_component__WEBPACK_IMPORTED_MODULE_6__["HeaderComponent"],
+                _partials_footer_footer_component__WEBPACK_IMPORTED_MODULE_7__["FooterComponent"],
+                _components_me_me_component__WEBPACK_IMPORTED_MODULE_8__["MeComponent"],
+                _components_tap_tap_component__WEBPACK_IMPORTED_MODULE_9__["TapComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
-                _app_routing__WEBPACK_IMPORTED_MODULE_2__["Routing"]
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
+                _app_routing__WEBPACK_IMPORTED_MODULE_3__["Routing"]
             ],
             providers: [],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
@@ -192,7 +195,7 @@ var Routing = _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forRo
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  home works!\n</p>\n"
+module.exports = "<div id=\"login\" Class=\"container\">\n  <div class=\"title_form\" (click)=\"show_form = 'login'\">Login</div>\n  <form #loginForm=\"ngForm\" (ngSubmit)=\"onSubmitLogin()\" *ngIf=\"show_form === 'login'\">\n    <div class=\"form-group\">\n      <label for=\"email_login\">Email</label>\n      <input type=\"email\" class=\"form-control\" [(ngModel)]=\"userLogin.email\" name=\"email_login\" id=\"email_login\" required>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"password_login\">Password</label>\n      <input type=\"password\" class=\"form-control\" [(ngModel)]=\"userLogin.password\" name=\"password_login\" id=\"password_login\" required>\n    </div>\n\n    <div class=\"submit\">\n      <button type=\"submit\" [disabled]=\"!loginForm.form.valid\">Connexion</button>\n    </div>\n  </form>\n</div>\n\n<div id=\"register\" Class=\"container\">\n  <div class=\"title_form\" (click)=\"show_form = 'register'\">Register</div>\n  <form #registerForm=\"ngForm\" (ngSubmit)=\"onSubmitRegister()\" *ngIf=\"show_form === 'register'\">\n    <div class=\"subtitle_form\">About you</div>\n    <div class=\"form-group\">\n      <label for=\"first_name\">First name</label>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"userRegister.firstName\" name=\"first_name\" id=\"first_name\" required>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"last_name\">Last name</label>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"userRegister.lastName\" name=\"last_name\" id=\"last_name\" required>\n    </div>\n\n    <div class=\"subtitle_form\">Login informations</div>\n    <div class=\"form-group\">\n      <label for=\"email_register\">Email</label>\n      <input type=\"email\" class=\"form-control\" [(ngModel)]=\"userRegister.email\" name=\"email_register\" id=\"email_register\" required>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" [(ngModel)]=\"userRegister.password\" name=\"password\" id=\"password\" required>\n    </div>\n\n    <div class=\"form-group\">\n        <input type=\"checkbox\" [(ngModel)]=\"cgv\" name=\"cgv\" id=\"cgv\" required>\n        <label for=\"cgv\">I accept the terms and conditions</label>\n    </div>\n\n    <div class=\"submit\">\n      <button type=\"submit\" [disabled]=\"!registerForm.form.valid\">Connexion</button>\n    </div>\n  </form>\n</div>"
 
 /***/ }),
 
@@ -208,6 +211,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeComponent", function() { return HomeComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_mongodb_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/mongodb.service */ "./src/app/services/mongodb.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -219,31 +223,53 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(mongodbService) {
+    function HomeComponent(mongodbService, router) {
         this.mongodbService = mongodbService;
+        this.router = router;
         this.userRegister = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: ''
+            firstName: 'Nicolas',
+            lastName: 'Heine',
+            email: 'nicolas.heine11@gmail.com',
+            password: 'password'
         };
+        this.cgv = false;
         this.userLogin = {
             email: '',
             password: ''
         };
+        this.show_form = 'login';
     }
     HomeComponent.prototype.ngOnInit = function () {
-        /*this.mongodbService.loginUser(this.user).then(user => {
-          if(!user['error']){
-            localStorage.setItem('token', user['token']);
-            localStorage.setItem('id', user['id']);
-          }else{
-            // error
-          }
+        if (localStorage.getItem('token')) {
+            this.router.navigate(['/me']);
+        }
+        /*this.mongodbService.saveTap(sessionStorage.getItem('token'), {id_user: 'get from token', score: 50}).then(data => {
+          console.log(data);
         });*/
-        this.mongodbService.saveTap(sessionStorage.getItem('token'), { id_user: localStorage.getItem('id'), score: 50 }).then(function (data) {
-            console.log(data);
+    };
+    HomeComponent.prototype.onSubmitLogin = function () {
+        var _this = this;
+        this.mongodbService.loginUser(this.userLogin).then(function (user) {
+            if (!user['error']) {
+                localStorage.setItem('token', user['token']);
+                _this.router.navigate(['/me']);
+            }
+            else {
+                // error
+            }
+        });
+    };
+    HomeComponent.prototype.onSubmitRegister = function () {
+        var _this = this;
+        this.mongodbService.registerUser(this.userRegister).then(function (user) {
+            if (!user['error']) {
+                _this.show_form = 'login';
+            }
+            else {
+                console.log('error');
+            }
         });
     };
     HomeComponent = __decorate([
@@ -252,7 +278,8 @@ var HomeComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./home.component.html */ "./src/app/components/home/home.component.html"),
             styles: []
         }),
-        __metadata("design:paramtypes", [_services_mongodb_service__WEBPACK_IMPORTED_MODULE_1__["MongodbService"]])
+        __metadata("design:paramtypes", [_services_mongodb_service__WEBPACK_IMPORTED_MODULE_1__["MongodbService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -372,7 +399,7 @@ var TapComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  footer works!\n</p>\n"
+module.exports = "<footer>\n  Under MIT Licence @2018 <a href=\"http://www.nicolasheine.fr\">Nicolas Heine</a>\n</footer>"
 
 /***/ }),
 

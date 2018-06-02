@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MongodbService } from '../../services/mongodb.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,32 +9,54 @@ import { MongodbService } from '../../services/mongodb.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private mongodbService: MongodbService) { }
+  constructor(
+    private mongodbService: MongodbService,
+    private router: Router
+  ) { }
 
   userRegister = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
+    firstName: 'Nicolas',
+    lastName: 'Heine',
+    email: 'nicolas.heine11@gmail.com',
+    password: 'password'
   };
+
+  cgv = false;
 
   userLogin = {
     email: '',
     password: ''
   };
 
-  ngOnInit() {
-    /*this.mongodbService.loginUser(this.user).then(user => {
+  show_form = 'login';
+
+  ngOnInit(){
+    if(localStorage.getItem('token')){
+      this.router.navigate(['/me']);
+    }
+    /*this.mongodbService.saveTap(sessionStorage.getItem('token'), {id_user: 'get from token', score: 50}).then(data => {
+      console.log(data);
+    });*/
+  }
+
+  onSubmitLogin(){
+    this.mongodbService.loginUser(this.userLogin).then(user => {
       if(!user['error']){
         localStorage.setItem('token', user['token']);
-        localStorage.setItem('id', user['id']);
+        this.router.navigate(['/me'])
       }else{
         // error
       }
-    });*/
+    });
+  }
 
-    this.mongodbService.saveTap(sessionStorage.getItem('token'), {id_user: localStorage.getItem('id'), score: 50}).then(data => {
-      console.log(data);
+  onSubmitRegister(){
+    this.mongodbService.registerUser(this.userRegister).then(user => {
+      if(!user['error']){
+        this.show_form = 'login';
+      }else{
+        console.log('error');
+      }
     });
   }
 
