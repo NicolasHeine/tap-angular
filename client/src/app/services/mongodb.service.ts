@@ -10,7 +10,7 @@ export class MongodbService {
   private getTasksUrl = 'http://localhost:8080/api/tasks';
   private editTaskUrl = 'http://localhost:8080/api/task';
 
-  public getAllTasks (): Promise<any[]> {
+  public getAllTasks (){
     return fetch(this.getTasksUrl,
       {
         method: 'GET',
