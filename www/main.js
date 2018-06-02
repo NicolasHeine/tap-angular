@@ -222,18 +222,28 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var HomeComponent = /** @class */ (function () {
     function HomeComponent(mongodbService) {
         this.mongodbService = mongodbService;
-        this.user = {
+        this.userRegister = {
             firstName: '',
             lastName: '',
-            email: 'yolsdo@ea.Fr',
-            password: 'test'
+            email: '',
+            password: ''
+        };
+        this.userLogin = {
+            email: '',
+            password: ''
         };
     }
     HomeComponent.prototype.ngOnInit = function () {
-        this.mongodbService.registerUser(this.user).then(function (user) {
-            // callBack => Injecter les données dans un tableau
-            //this.tasksCollection = data;
-            console.log(user);
+        /*this.mongodbService.loginUser(this.user).then(user => {
+          if(!user['error']){
+            localStorage.setItem('token', user['token']);
+            localStorage.setItem('id', user['id']);
+          }else{
+            // error
+          }
+        });*/
+        this.mongodbService.saveTap(sessionStorage.getItem('token'), { id_user: localStorage.getItem('id'), score: 50 }).then(function (data) {
+            console.log(data);
         });
     };
     HomeComponent = __decorate([
@@ -482,39 +492,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var MongodbService = /** @class */ (function () {
     function MongodbService() {
-        this.getTasksUrl = 'http://localhost:8080/api/tasks';
-        this.editTaskUrl = 'http://localhost:8080/api/task';
         this.registerUserUrl = 'http://localhost:8080/api/register';
+        this.loginUserUrl = 'http://localhost:8080/api/login';
+        this.saveTapUrl = 'http://localhost:8080/api/save';
     }
-    MongodbService.prototype.getAllTasks = function () {
-        return fetch(this.getTasksUrl, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(function (data) {
-            return Promise.resolve(data);
-        })
-            .then(function (data) { return data.json(); })
-            .catch(function (err) { return console.log(err); });
-    };
-    MongodbService.prototype.addNewTask = function (newTask) {
-        return fetch(this.editTaskUrl, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            body: newTask
-        })
-            .then(function (data) {
-            return Promise.resolve(data);
-        })
-            .then(function (data) { return data.json(); })
-            .catch(function (err) { return console.log(err); });
-    };
     MongodbService.prototype.registerUser = function (user) {
         return fetch(this.registerUserUrl, {
             method: 'POST',
@@ -523,6 +504,37 @@ var MongodbService = /** @class */ (function () {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
+        })
+            .then(function (data) {
+            return Promise.resolve(data);
+        })
+            .then(function (data) { return data.json(); })
+            .catch(function (err) { return console.log(err); });
+    };
+    MongodbService.prototype.loginUser = function (user) {
+        return fetch(this.loginUserUrl, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(function (data) {
+            return Promise.resolve(data);
+        })
+            .then(function (data) { return data.json(); })
+            .catch(function (err) { return console.log(err); });
+    };
+    MongodbService.prototype.saveTap = function (token, content) {
+        return fetch(this.saveTapUrl, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
+            body: JSON.stringify(content)
         })
             .then(function (data) {
             return Promise.resolve(data);

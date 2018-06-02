@@ -10,19 +10,30 @@ export class HomeComponent implements OnInit {
 
   constructor(private mongodbService: MongodbService) { }
 
-  user = {
+  userRegister = {
     firstName: '',
     lastName: '',
-    email: 'yolsdo@ea.Fr',
-    password: 'test'
+    email: '',
+    password: ''
+  };
+
+  userLogin = {
+    email: '',
+    password: ''
   };
 
   ngOnInit() {
-    this.mongodbService.registerUser(this.user).then(user => {
+    /*this.mongodbService.loginUser(this.user).then(user => {
+      if(!user['error']){
+        localStorage.setItem('token', user['token']);
+        localStorage.setItem('id', user['id']);
+      }else{
+        // error
+      }
+    });*/
 
-      // callBack => Injecter les données dans un tableau
-      //this.tasksCollection = data;
-      console.log(user);
+    this.mongodbService.saveTap(sessionStorage.getItem('token'), {id_user: localStorage.getItem('id'), score: 50}).then(data => {
+      console.log(data);
     });
   }
 
