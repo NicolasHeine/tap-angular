@@ -15,28 +15,25 @@ export class HomeComponent implements OnInit {
   ) { }
 
   userRegister = {
-    firstName: 'Nicolas',
-    lastName: 'Heine',
-    email: 'nicolas.heine11@gmail.com',
-    password: 'password'
-  };
-
-  cgv = false;
-
-  userLogin = {
+    firstName: '',
+    lastName: '',
     email: '',
     password: ''
   };
 
-  show_form = 'login';
+  cgv: boolean = false;
+
+  userLogin = {
+    email: 'nicolas.heine11@gmail.com',
+    password: 'password'
+  };
+
+  show_form: string = 'login';
 
   ngOnInit(){
     if(localStorage.getItem('token')){
       this.router.navigate(['/me']);
     }
-    /*this.mongodbService.saveTap(sessionStorage.getItem('token'), {id_user: 'get from token', score: 50}).then(data => {
-      console.log(data);
-    });*/
   }
 
   onSubmitLogin(){

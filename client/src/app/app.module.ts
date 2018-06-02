@@ -7,7 +7,6 @@ import { Routing } from './app.routing';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { HeaderComponent } from './partials/header/header.component';
 import { FooterComponent } from './partials/footer/footer.component';
 import { MeComponent } from './components/me/me.component';
 import { TapComponent } from './components/tap/tap.component';
@@ -16,7 +15,6 @@ import { TapComponent } from './components/tap/tap.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    HeaderComponent,
     FooterComponent,
     MeComponent,
     TapComponent

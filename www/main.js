@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n\n<main>\n  <router-outlet></router-outlet>\n</main>\n\n<app-footer></app-footer>"
+module.exports = "<main>\n  <router-outlet></router-outlet>\n</main>\n\n<app-footer></app-footer>"
 
 /***/ }),
 
@@ -97,10 +97,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _components_home_home_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/home/home.component */ "./src/app/components/home/home.component.ts");
-/* harmony import */ var _partials_header_header_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./partials/header/header.component */ "./src/app/partials/header/header.component.ts");
-/* harmony import */ var _partials_footer_footer_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./partials/footer/footer.component */ "./src/app/partials/footer/footer.component.ts");
-/* harmony import */ var _components_me_me_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/me/me.component */ "./src/app/components/me/me.component.ts");
-/* harmony import */ var _components_tap_tap_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/tap/tap.component */ "./src/app/components/tap/tap.component.ts");
+/* harmony import */ var _partials_footer_footer_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./partials/footer/footer.component */ "./src/app/partials/footer/footer.component.ts");
+/* harmony import */ var _components_me_me_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/me/me.component */ "./src/app/components/me/me.component.ts");
+/* harmony import */ var _components_tap_tap_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/tap/tap.component */ "./src/app/components/tap/tap.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -117,7 +116,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -126,10 +124,9 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
                 _components_home_home_component__WEBPACK_IMPORTED_MODULE_5__["HomeComponent"],
-                _partials_header_header_component__WEBPACK_IMPORTED_MODULE_6__["HeaderComponent"],
-                _partials_footer_footer_component__WEBPACK_IMPORTED_MODULE_7__["FooterComponent"],
-                _components_me_me_component__WEBPACK_IMPORTED_MODULE_8__["MeComponent"],
-                _components_tap_tap_component__WEBPACK_IMPORTED_MODULE_9__["TapComponent"]
+                _partials_footer_footer_component__WEBPACK_IMPORTED_MODULE_6__["FooterComponent"],
+                _components_me_me_component__WEBPACK_IMPORTED_MODULE_7__["MeComponent"],
+                _components_tap_tap_component__WEBPACK_IMPORTED_MODULE_8__["TapComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -229,15 +226,15 @@ var HomeComponent = /** @class */ (function () {
         this.mongodbService = mongodbService;
         this.router = router;
         this.userRegister = {
-            firstName: 'Nicolas',
-            lastName: 'Heine',
-            email: 'nicolas.heine11@gmail.com',
-            password: 'password'
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: ''
         };
         this.cgv = false;
         this.userLogin = {
-            email: '',
-            password: ''
+            email: 'nicolas.heine11@gmail.com',
+            password: 'password'
         };
         this.show_form = 'login';
     }
@@ -245,9 +242,6 @@ var HomeComponent = /** @class */ (function () {
         if (localStorage.getItem('token')) {
             this.router.navigate(['/me']);
         }
-        /*this.mongodbService.saveTap(sessionStorage.getItem('token'), {id_user: 'get from token', score: 50}).then(data => {
-          console.log(data);
-        });*/
     };
     HomeComponent.prototype.onSubmitLogin = function () {
         var _this = this;
@@ -310,6 +304,8 @@ module.exports = "<p>\n  me works!\n</p>\n"
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MeComponent", function() { return MeComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_mongodb_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/mongodb.service */ "./src/app/services/mongodb.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -320,10 +316,37 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var MeComponent = /** @class */ (function () {
-    function MeComponent() {
+    function MeComponent(mongodbService, router) {
+        this.mongodbService = mongodbService;
+        this.router = router;
+        // Data
+        this.score = 0;
+        this.id_user = '';
+        this.token = '';
     }
     MeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        if (!localStorage.getItem('token')) {
+            this.router.navigate(['/']);
+        }
+        else {
+            this.token = localStorage.getItem('token');
+            this.mongodbService.getDataFromToken(this.token).then(function (data) {
+                if (!data['error']) {
+                }
+                else {
+                    _this.user = data['user'];
+                }
+            });
+        }
+    };
+    MeComponent.prototype.sendScore = function () {
+        this.mongodbService.saveTap(sessionStorage.getItem('token'), { id_user: this.id_user, score: this.score }).then(function (data) {
+            console.log(data);
+        });
     };
     MeComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -331,7 +354,8 @@ var MeComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./me.component.html */ "./src/app/components/me/me.component.html"),
             styles: []
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_mongodb_service__WEBPACK_IMPORTED_MODULE_1__["MongodbService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], MeComponent);
     return MeComponent;
 }());
@@ -444,58 +468,6 @@ var FooterComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/partials/header/header.component.html":
-/*!*******************************************************!*\
-  !*** ./src/app/partials/header/header.component.html ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<p>\n  header works!\n</p>\n"
-
-/***/ }),
-
-/***/ "./src/app/partials/header/header.component.ts":
-/*!*****************************************************!*\
-  !*** ./src/app/partials/header/header.component.ts ***!
-  \*****************************************************/
-/*! exports provided: HeaderComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HeaderComponent", function() { return HeaderComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var HeaderComponent = /** @class */ (function () {
-    function HeaderComponent() {
-    }
-    HeaderComponent.prototype.ngOnInit = function () {
-    };
-    HeaderComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-header',
-            template: __webpack_require__(/*! ./header.component.html */ "./src/app/partials/header/header.component.html"),
-            styles: []
-        }),
-        __metadata("design:paramtypes", [])
-    ], HeaderComponent);
-    return HeaderComponent;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/services/mongodb.service.ts":
 /*!*********************************************!*\
   !*** ./src/app/services/mongodb.service.ts ***!
@@ -521,6 +493,7 @@ var MongodbService = /** @class */ (function () {
     function MongodbService() {
         this.registerUserUrl = 'http://localhost:8080/api/register';
         this.loginUserUrl = 'http://localhost:8080/api/login';
+        this.getDataUrl = 'http://localhost:8080/api/getdata';
         this.saveTapUrl = 'http://localhost:8080/api/save';
     }
     MongodbService.prototype.registerUser = function (user) {
@@ -546,6 +519,21 @@ var MongodbService = /** @class */ (function () {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
+        })
+            .then(function (data) {
+            return Promise.resolve(data);
+        })
+            .then(function (data) { return data.json(); })
+            .catch(function (err) { return console.log(err); });
+    };
+    MongodbService.prototype.getDataFromToken = function (token) {
+        return fetch(this.getDataUrl, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            }
         })
             .then(function (data) {
             return Promise.resolve(data);

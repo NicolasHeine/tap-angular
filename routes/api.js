@@ -14,11 +14,6 @@ const jwt = require('jsonwebtoken');
 let express = require('express');
 let router = express.Router();
 
-// Configuration de la route principale => http://localhost:8080/api/
-router.get('/', (req, res, next) => {
-  res.json({ res: 'Bienvenue dans votre API' })
-});
-
 // Register user
 router.post('/register', (req, res, next) => {
   // Ouvrir une connexion sur la base MongoDb
@@ -74,7 +69,7 @@ router.post('/login', (req, res, next) => {
             if (!passwordIsValid) {
               res.json({error: 'Wrong login'});
             }else{
-              const userToken = jwt.sign({ id: user._id }, 'test', { expiresIn: 86400 });
+              const userToken = jwt.sign({ id: user[0]._id }, 'test', { expiresIn: 86400 });
               res.json({error: false, token: userToken, id: user[0]._id});
             }
           }
@@ -86,6 +81,37 @@ router.post('/login', (req, res, next) => {
   });
 });
 
+//
+router.get('/getdata', VerifyToken, (req, res, next) => {
+  if(!req.userId){
+    res.json({error: 'Wrong token'})
+  }else{
+    // Ouvrir une connexion sur la base MongoDb
+    MongoClient.connect(mongodbUrl, (err, db) =>{
+      // Tester la connexion
+      if(err){
+        res.send(err)
+      }else{
+        // Check if user exist
+        db.collection('user').find({_id: ObjectId(req.userId)}).toArray((err, user) => {
+          // Tester la commande MongoDb
+          if(err){
+            res.send(err);
+          }else{
+            // Check if user exist
+            if(!user.length){
+              res.json({error: 'User not exist'});
+            }else{
+              res.json({error: false, user: user[0]});
+            }
+          }
+        })
+        db.close();
+      }
+    });
+  }
+});
+
 // Save tap
 router.post('/save', VerifyToken, (req, res, next) => {
   // Ouvrir une connexion sur la base MongoDb
@@ -95,7 +121,6 @@ router.post('/save', VerifyToken, (req, res, next) => {
       res.send(err)
     }else{
       // Check if user exist
-      console.log(req.body);
       db.collection('user').find({_id: ObjectId(req.body.id_user)}).toArray((err, user) => {
         // Tester la commande MongoDb
         if(err){
