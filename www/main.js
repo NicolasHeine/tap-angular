@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<main>\n  <router-outlet></router-outlet>\n</main>\n\n<app-footer></app-footer>"
+module.exports = "<main>\r\n  <router-outlet></router-outlet>\r\n</main>\r\n\r\n<app-footer></app-footer>"
 
 /***/ }),
 
@@ -192,7 +192,7 @@ var Routing = _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forRo
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"login\" Class=\"container\">\n  <div class=\"title_form\" (click)=\"show_form = 'login'\">Login</div>\n  <form #loginForm=\"ngForm\" (ngSubmit)=\"onSubmitLogin()\" *ngIf=\"show_form === 'login'\">\n    <div class=\"form-group\">\n      <label for=\"email_login\">Email</label>\n      <input type=\"email\" class=\"form-control\" [(ngModel)]=\"userLogin.email\" name=\"email_login\" id=\"email_login\" required>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"password_login\">Password</label>\n      <input type=\"password\" class=\"form-control\" [(ngModel)]=\"userLogin.password\" name=\"password_login\" id=\"password_login\" required>\n    </div>\n\n    <div class=\"submit\">\n      <button type=\"submit\" [disabled]=\"!loginForm.form.valid\">Connexion</button>\n    </div>\n  </form>\n</div>\n\n<div id=\"register\" Class=\"container\">\n  <div class=\"title_form\" (click)=\"show_form = 'register'\">Register</div>\n  <form #registerForm=\"ngForm\" (ngSubmit)=\"onSubmitRegister()\" *ngIf=\"show_form === 'register'\">\n    <div class=\"subtitle_form\">About you</div>\n    <div class=\"form-group\">\n      <label for=\"first_name\">First name</label>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"userRegister.firstName\" name=\"first_name\" id=\"first_name\" required>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"last_name\">Last name</label>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"userRegister.lastName\" name=\"last_name\" id=\"last_name\" required>\n    </div>\n\n    <div class=\"subtitle_form\">Login informations</div>\n    <div class=\"form-group\">\n      <label for=\"email_register\">Email</label>\n      <input type=\"email\" class=\"form-control\" [(ngModel)]=\"userRegister.email\" name=\"email_register\" id=\"email_register\" required>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" [(ngModel)]=\"userRegister.password\" name=\"password\" id=\"password\" required>\n    </div>\n\n    <div class=\"form-group\">\n        <input type=\"checkbox\" [(ngModel)]=\"cgv\" name=\"cgv\" id=\"cgv\" required>\n        <label for=\"cgv\">I accept the terms and conditions</label>\n    </div>\n\n    <div class=\"submit\">\n      <button type=\"submit\" [disabled]=\"!registerForm.form.valid\">Connexion</button>\n    </div>\n  </form>\n</div>"
+module.exports = "<header>\r\n  <h1>Welcome on tapboard</h1>\r\n</header>\r\n<div id=\"login\" Class=\"container\">\r\n  <div class=\"title_form\" (click)=\"show_form = 'login'\">Login</div>\r\n  <form #loginForm=\"ngForm\" (ngSubmit)=\"onSubmitLogin()\" *ngIf=\"show_form === 'login'\">\r\n    <div class=\"form-group\">\r\n      <label for=\"email_login\">Email</label>\r\n      <input type=\"email\" class=\"form-control\" [(ngModel)]=\"userLogin.email\" name=\"email_login\" id=\"email_login\" required>\r\n    </div>\r\n\r\n    <div class=\"form-group\">\r\n      <label for=\"password_login\">Password</label>\r\n      <input type=\"password\" class=\"form-control\" [(ngModel)]=\"userLogin.password\" name=\"password_login\" id=\"password_login\" required>\r\n    </div>\r\n\r\n    <div class=\"submit\">\r\n      <button type=\"submit\" [disabled]=\"!loginForm.form.valid\">Connexion</button>\r\n    </div>\r\n  </form>\r\n</div>\r\n\r\n<div id=\"register\" Class=\"container\">\r\n  <div class=\"title_form\" (click)=\"show_form = 'register'\">Register</div>\r\n  <form #registerForm=\"ngForm\" (ngSubmit)=\"onSubmitRegister()\" *ngIf=\"show_form === 'register'\">\r\n    <div class=\"subtitle_form\">About you</div>\r\n    <div class=\"form-group\">\r\n      <label for=\"first_name\">First name</label>\r\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"userRegister.firstName\" name=\"first_name\" id=\"first_name\" required>\r\n    </div>\r\n\r\n    <div class=\"form-group\">\r\n      <label for=\"last_name\">Last name</label>\r\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"userRegister.lastName\" name=\"last_name\" id=\"last_name\" required>\r\n    </div>\r\n\r\n    <div class=\"subtitle_form\">Login informations</div>\r\n    <div class=\"form-group\">\r\n      <label for=\"email_register\">Email</label>\r\n      <input type=\"email\" class=\"form-control\" [(ngModel)]=\"userRegister.email\" name=\"email_register\" id=\"email_register\" required>\r\n    </div>\r\n\r\n    <div class=\"form-group\">\r\n      <label for=\"password\">Password</label>\r\n      <input type=\"password\" class=\"form-control\" [(ngModel)]=\"userRegister.password\" name=\"password\" id=\"password\" required>\r\n    </div>\r\n\r\n    <div class=\"form-group\">\r\n        <input type=\"checkbox\" [(ngModel)]=\"cgv\" name=\"cgv\" id=\"cgv\" required>\r\n        <label for=\"cgv\">I accept the terms and conditions</label>\r\n    </div>\r\n\r\n    <div class=\"submit\">\r\n      <button type=\"submit\" [disabled]=\"!registerForm.form.valid\">Connexion</button>\r\n    </div>\r\n  </form>\r\n</div>"
 
 /***/ }),
 
@@ -233,8 +233,8 @@ var HomeComponent = /** @class */ (function () {
         };
         this.cgv = false;
         this.userLogin = {
-            email: 'nicolas.heine11@gmail.com',
-            password: 'password'
+            email: '',
+            password: ''
         };
         this.show_form = 'login';
     }
@@ -251,7 +251,7 @@ var HomeComponent = /** @class */ (function () {
                 _this.router.navigate(['/me']);
             }
             else {
-                // error
+                console.log(user);
             }
         });
     };
@@ -262,7 +262,7 @@ var HomeComponent = /** @class */ (function () {
                 _this.show_form = 'login';
             }
             else {
-                console.log('error');
+                console.log(user);
             }
         });
     };
@@ -289,7 +289,7 @@ var HomeComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n  Bonjour {{ user.firstName }} {{ user.lastName }}\n  You have 10 seconds to tap, ready? steady? tap!\n  <a routerLink=\"/tap\">Scores</a>\n  <a (click)=\"logOut()\">Logout</a>\n</header>\n<main>\n  <button (click)=\"startGame()\">CLIQUE ICI</button>\n  <div class=\"state state-{{ count }}\">Timer</div>\n</main>\n"
+module.exports = "<header>\r\n  <h1>Bonjour {{ user.firstName }} {{ user.lastName }}</h1>\r\n  <h2>You have 10 seconds to tap, ready? steady? tap!</h2>\r\n  <a routerLink=\"/tap\" style=\"margin-right: 5px;\">Scores</a>\r\n  <a href=\"javascript:void(0)\" (click)=\"logOut()\">Logout</a>\r\n</header>\r\n<main>\r\n  <div class=\"button\" [ngClass]=\"{'green': color}\" (click)=\"startGame()\"></div>\r\n  <div class=\"state state-{{ count }}\"></div>\r\n</main>\r\n"
 
 /***/ }),
 
@@ -332,6 +332,7 @@ var MeComponent = /** @class */ (function () {
             email: '',
             password: ''
         };
+        this.color = 0;
         this.start = false;
         this.finish = false;
         this.count = 0;
@@ -354,6 +355,12 @@ var MeComponent = /** @class */ (function () {
     };
     MeComponent.prototype.startGame = function () {
         if (!this.finish) {
+            if (this.color) {
+                this.color = 0;
+            }
+            else {
+                this.color = 1;
+            }
             if (this.start) {
                 this.score++;
             }
@@ -374,7 +381,7 @@ var MeComponent = /** @class */ (function () {
     };
     MeComponent.prototype.sendScore = function () {
         var _this = this;
-        this.mongodbService.saveTap(sessionStorage.getItem('token'), { id_user: this.user._id, score: this.score }).then(function (data) {
+        this.mongodbService.saveTap(localStorage.getItem('token'), { id_user: this.user._id, score: this.score }).then(function (data) {
             if (!data['error']) {
                 _this.router.navigate(['/tap']);
             }
@@ -407,7 +414,7 @@ var MeComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n  Score table\n  Here is the list of the scores\n  <a routerLink=\"/me\">Play</a>\n  <a (click)=\"logOut()\">Logout</a>\n</header>\n<main>\n  <ul class=\"scores\">\n    <li *ngFor=\"let score of scores\">\n      <span class=\"score\">{{ score.score }}pts</span> <span class=\"info\">{{ score.firstName}} {{ score.lastName }} / {{ score.time|date:'dd/MM/y - HH\\'h\\'mm\\'m\\'ss\\'s\\'' }}</span>\n    </li>\n  </ul>\n</main>\n"
+module.exports = "<header>\r\n  <h1>Score table</h1>\r\n  <h2>Here is the list of the scores</h2>\r\n  <a routerLink=\"/me\" style=\"margin-right: 5px;\">Play</a>\r\n  <a href=\"javascript:void(0)\" (click)=\"logOut()\">Logout</a>\r\n</header>\r\n<main>\r\n  <ul class=\"scores\">\r\n    <li *ngFor=\"let score of scores\">\r\n      <span class=\"score\">{{ score.score }}pts</span> <span class=\"info\">{{ score.firstName}} {{ score.lastName }} / {{ score.time|date:'dd/MM/y - HH\\'h\\'mm\\'m\\'ss\\'s\\'' }}</span>\r\n    </li>\r\n  </ul>\r\n</main>\r\n"
 
 /***/ }),
 
@@ -484,7 +491,7 @@ var TapComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<footer>\n  Under MIT Licence @2018 <a href=\"http://www.nicolasheine.fr\">Nicolas Heine</a>\n</footer>"
+module.exports = "<footer>\r\n  Under MIT Licence @2018 <a href=\"http://www.nicolasheine.fr\">Nicolas Heine</a>\r\n</footer>"
 
 /***/ }),
 

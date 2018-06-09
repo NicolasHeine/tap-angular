@@ -69,7 +69,7 @@ router.post('/login', (req, res, next) => {
             if (!passwordIsValid) {
               res.json({error: 'Wrong login'});
             }else{
-              const userToken = jwt.sign({ id: user[0]._id }, 'test', { expiresIn: 86400 });
+              const userToken = jwt.sign({ id: user[0]._id }, 'ThisIsNotSecretChangeIt', { expiresIn: 86400 });
               res.json({error: false, token: userToken, id: user[0]._id});
             }
           }
@@ -182,7 +182,7 @@ function VerifyToken(req, res, next) {
   if (!token) return res.status(403).send({ auth: false, message: 'No token provided.' });
 
   // Vérification du token
-  jwt.verify(token, 'test', (err, decoded) => {
+  jwt.verify(token, 'ThisIsNotSecretChangeIt', (err, decoded) => {
     // Message d'erreur
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
 

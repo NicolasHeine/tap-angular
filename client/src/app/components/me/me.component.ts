@@ -24,6 +24,7 @@ export class MeComponent implements OnInit {
     email: '',
     password: ''
   };
+  color = 0;
 
   ngOnInit() {
     if(!localStorage.getItem('token')){
@@ -45,6 +46,11 @@ export class MeComponent implements OnInit {
   count: number = 0;
   startGame(){
     if(!this.finish){
+      if(this.color){
+        this.color = 0;
+      }else{
+        this.color = 1;
+      }
       if(this.start){ // Already launch
         this.score++;
       }else{ // Launch timer
@@ -64,7 +70,7 @@ export class MeComponent implements OnInit {
   }
 
   sendScore(){
-    this.mongodbService.saveTap(sessionStorage.getItem('token'), {id_user: this.user._id, score: this.score}).then(data => {
+    this.mongodbService.saveTap(localStorage.getItem('token'), {id_user: this.user._id, score: this.score}).then(data => {
       if(!data['error']){
         this.router.navigate(['/tap']);
       }

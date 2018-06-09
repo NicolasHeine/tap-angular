@@ -24,8 +24,8 @@ export class HomeComponent implements OnInit {
   cgv: boolean = false;
 
   userLogin = {
-    email: 'nicolas.heine11@gmail.com',
-    password: 'password'
+    email: '',
+    password: ''
   };
 
   show_form: string = 'login';
@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
         localStorage.setItem('token', user['token']);
         this.router.navigate(['/me'])
       }else{
-        // error
+        console.log(user);
       }
     });
   }
@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
       if(!user['error']){
         this.show_form = 'login';
       }else{
-        console.log('error');
+        console.log(user);
       }
     });
   }
